@@ -8,6 +8,8 @@ import java.util.List;
 
 public class Polygon {
     private final List<Point> points = new ArrayList<>();
+    public final double radius;
+    public final Point center;
     
     public Polygon(double radius, int n, double startAngle, Point center)
     throws IllegalArgumentException {
@@ -23,6 +25,8 @@ public class Polygon {
             ));
             angle += deltaAngle;
         }
+        this.radius = radius;
+        this.center = center;
     }
     
     public Polygon(int n, double side, double startAngle, Point center)
@@ -35,5 +39,24 @@ public class Polygon {
     
     public List<Point> getPoints() {
         return points;
+    }
+    
+    public boolean isInside(Point point) {
+        boolean result = false;
+        var prev = points.get(points.size() - 1);
+        for (var current : points) {
+            if (
+                ((current.y > point.y) != (prev.y > point.y)) && (
+                    point.x < current.x + (
+                        prev.x - current.x
+                    ) * (point.y - current.y) / (prev.y - current.y)
+                )
+            )
+            {
+                result = !result;
+            }
+            prev = current;
+        }
+        return result;
     }
 }

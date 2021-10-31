@@ -1,6 +1,7 @@
 package task_3.window;
 
 import task_3.figures.Polygon;
+import task_3.figures.Square;
 import task_3.graphics.drawers.PolygonDrawer;
 import task_3.graphics.points.Point;
 
@@ -22,7 +23,17 @@ public class Window
     public void init() {
         pixelPane.addDrawer(
             new PolygonDrawer(new Polygon(
-                300.0, 5, Math.PI / 2, new Point(0, 0)
+                200.0, 5, Math.PI / 2, new Point(0, 0)
+            ))
+        );
+        pixelPane.addDrawer(
+            new PolygonDrawer(new Polygon(
+                300.0, 5, 0, new Point(500, 0)
+            ))
+        );
+        pixelPane.addDrawer(
+            new PolygonDrawer(new Square(
+                100.0, new Point(-500, 0)
             ))
         );
     }

@@ -12,7 +12,7 @@ public class DrawParams {
     
     public Point convert(Pixel pixel) {
         double x = pixel.x * scaleX - offsetX;
-        double y = -(pixel.y * scaleY - offsetY);
+        double y = -pixel.y * scaleY - offsetY;
         return new Point(x, y);
     }
     

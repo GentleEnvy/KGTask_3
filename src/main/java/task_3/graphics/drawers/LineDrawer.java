@@ -10,9 +10,9 @@ import java.awt.*;
 public class LineDrawer
     extends BaseDrawer
 {
-    private static final Color defaultColor = Color.BLACK;
-    
     private final Line line;
+    
+    public Color color = Color.BLACK;
     
     public LineDrawer(final Line line) {
         this.line = line;
@@ -64,14 +64,14 @@ public class LineDrawer
             new Pixel(
                 isSteep ? startY : startX,
                 isSteep ? startX : startY,
-                defaultColor
+                color
             )
         );
         canvas.setPixel(
             new Pixel(
                 isSteep ? endY : endX,
                 isSteep ? endX : endY,
-                defaultColor
+                color
             )
         );
         
@@ -99,9 +99,9 @@ public class LineDrawer
     
     private Color createColor(double opacity) {
         return new Color(
-            defaultColor.getRed(),
-            defaultColor.getGreen(),
-            defaultColor.getBlue(),
+            color.getRed(),
+            color.getGreen(),
+            color.getBlue(),
             (int) ((opacity > 1 ? 1 : (opacity < 0 ? 0 : opacity)) * 255)
         );
     }

@@ -49,6 +49,17 @@ public class PixelPane
         drawers.remove(drawer);
     }
     
+    private boolean checkEdit(InputEvent event) {
+        var wasEdited = false;
+        for (var drawer : drawers) {
+            if (drawer.edit(drawParams, event)) {
+                wasEdited = true;
+            }
+        }
+        repaint();
+        return wasEdited;
+    }
+    
     @Override
     public void paint(Graphics g) {
         Canvas canvas = new Canvas(getWidth(), getHeight());
@@ -60,42 +71,58 @@ public class PixelPane
     }
     
     @Override
-    public void keyTyped(final KeyEvent e) { }
+    public void keyTyped(final KeyEvent e) {
+        checkEdit(e);
+    }
     
     @Override
-    public void keyPressed(final KeyEvent e) {}
+    public void keyPressed(final KeyEvent e) {
+        checkEdit(e);
+    }
     
     @Override
-    public void keyReleased(final KeyEvent e) {}
+    public void keyReleased(final KeyEvent e) {
+        checkEdit(e);
+    }
     
     @Override
-    public void mouseClicked(final MouseEvent e) {}
+    public void mouseClicked(final MouseEvent e) {
+        checkEdit(e);
+    }
     
     @Override
     public void mousePressed(final MouseEvent event) {
-        prevDrag = new Pixel(event.getX(), event.getY());
+        if (!checkEdit(event)) {
+            prevDrag = new Pixel(event.getX(), event.getY());
+        }
     }
     
     @Override
     public void mouseReleased(final MouseEvent e) {
-        prevDrag = null;
+        if (!checkEdit(e)) {
+            prevDrag = null;
+        }
     }
     
     @Override
-    public void mouseEntered(final MouseEvent e) {}
+    public void mouseEntered(final MouseEvent e) {
+        checkEdit(e);
+    }
     
     @Override
-    public void mouseExited(final MouseEvent e) {}
+    public void mouseExited(final MouseEvent e) {
+        checkEdit(e);
+    }
     
     @Override
     public void mouseDragged(final MouseEvent event) {
-        if (prevDrag != null) {
+        if (!checkEdit(event) && prevDrag != null) {
             var current = new Pixel(event.getX(), event.getY());
             var delta = new Pixel(
                 (int) ((current.x - prevDrag.x) * SPEED_DRAG),
                 (int) ((current.y - prevDrag.y) * SPEED_DRAG)
             );
-            
+        
             var deltaReal = drawParams.convert(delta);
             var zeroReal = drawParams.convert(new Pixel(0, 0));
             var vector = new Point(
@@ -112,19 +139,23 @@ public class PixelPane
     }
     
     @Override
-    public void mouseMoved(final MouseEvent e) {}
+    public void mouseMoved(final MouseEvent e) {
+        checkEdit(e);
+    }
     
     @Override
     public void mouseWheelMoved(final MouseWheelEvent event) {
-        double scale = 1 + Math.signum(event.getWheelRotation()) * SPEED_SCALE;
+        if (!checkEdit(event)) {
+            double scale = 1 + Math.signum(event.getWheelRotation()) * SPEED_SCALE;
         
-        var scaleParams = new DrawParams();
-        scaleParams.scaleX = scale;
-        scaleParams.scaleY = scale;
-        scaleParams.offsetX = (scale - 1) * drawParams.scaleX * event.getX();
-        scaleParams.offsetY = (1 - scale) * drawParams.scaleY * event.getY();
-        drawParams.modify(scaleParams);
+            var scaleParams = new DrawParams();
+            scaleParams.scaleX = scale;
+            scaleParams.scaleY = scale;
+            scaleParams.offsetX = (scale - 1) * drawParams.scaleX * event.getX();
+            scaleParams.offsetY = (1 - scale) * drawParams.scaleY * event.getY();
+            drawParams.modify(scaleParams);
         
-        repaint();
+            repaint();
+        }
     }
 }
