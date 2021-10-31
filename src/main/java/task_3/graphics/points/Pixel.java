@@ -1,6 +1,6 @@
 package task_3.graphics.points;
 
-import javafx.scene.paint.Color;
+import java.awt.*;
 
 
 public class Pixel {
