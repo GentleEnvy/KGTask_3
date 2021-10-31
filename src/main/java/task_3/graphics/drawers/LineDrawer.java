@@ -1,9 +1,10 @@
 package task_3.graphics.drawers;
 
-import javafx.scene.paint.Color;
 import task_3.figures.Line;
 import task_3.graphics.canvas.Canvas;
 import task_3.graphics.points.Pixel;
+
+import java.awt.*;
 
 
 public class LineDrawer
@@ -101,7 +102,7 @@ public class LineDrawer
             defaultColor.getRed(),
             defaultColor.getGreen(),
             defaultColor.getBlue(),
-            opacity > 1 ? 1 : (opacity < 0 ? 0 : opacity)
+            (int) ((opacity > 1 ? 1 : (opacity < 0 ? 0 : opacity)) * 255)
         );
     }
 }

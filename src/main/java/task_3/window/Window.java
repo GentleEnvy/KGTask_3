@@ -1,27 +1,29 @@
 package task_3.window;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import task_3.figures.Polygon;
+import task_3.graphics.drawers.PolygonDrawer;
+import task_3.graphics.points.Point;
+
+import javax.swing.*;
 
 
 public class Window
-    extends Application
+    extends JFrame
 {
-    @Override
-    public void start(Stage stage)
-    throws Exception {
-        var mainLoader = new FXMLLoader(getClass().getResource("main.fxml"));
-        Parent root = mainLoader.load();
-        stage.setMaximized(true);
-        var scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    private final PixelPane pixelPane;
+    
+    public Window() {
+        pixelPane = new PixelPane();
+        init();
+        pixelPane.setFocusable(true);
+        this.add(pixelPane);
     }
     
-    public static void startWindow() {
-        launch();
+    public void init() {
+        pixelPane.addDrawer(
+            new PolygonDrawer(new Polygon(
+                300.0, 5, Math.PI / 2, new Point(0, 0)
+            ))
+        );
     }
 }

@@ -5,23 +5,25 @@ import javafx.scene.image.WritableImage;
 import task_3.graphics.points.Pixel;
 import task_3.graphics.points.Point;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
-public class Canvas
-    extends ImageView
-{
-    private final WritableImage writableImage;
+public class Canvas {
+    public final BufferedImage bufferedImage;
     private final DrawParams drawParams = new DrawParams();
     
     public Canvas(int weight, int height) {
-        super();
-        writableImage = new WritableImage(weight, height);
-        setImage(writableImage);
+        bufferedImage = new BufferedImage(weight, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics gr = bufferedImage.createGraphics();
+        gr.setColor(Color.WHITE);
+        gr.fillRect(0, 0, weight, height);
+        gr.dispose();
     }
     
     public void setPixel(Pixel pixel) {
         try {
-            writableImage.getPixelWriter().setColor(pixel.x, pixel.y, pixel.color);
-        } catch (IndexOutOfBoundsException e) {
+            bufferedImage.setRGB(pixel.x, pixel.y, pixel.color.getRGB());
+        } catch (ArrayIndexOutOfBoundsException e) {
             //
         }
     }
