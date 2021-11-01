@@ -1,7 +1,5 @@
 package task_3.graphics.canvas;
 
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import task_3.graphics.points.Pixel;
 import task_3.graphics.points.Point;
 
