@@ -11,7 +11,7 @@ public class Canvas {
     private final DrawParams drawParams = new DrawParams();
     
     public Canvas(int weight, int height) {
-        bufferedImage = new BufferedImage(weight, height, BufferedImage.TYPE_INT_ARGB);
+        bufferedImage = new BufferedImage(weight, height, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics gr = bufferedImage.createGraphics();
         gr.setColor(Color.WHITE);
         gr.fillRect(0, 0, weight, height);
@@ -20,7 +20,9 @@ public class Canvas {
     
     public void setPixel(Pixel pixel) {
         try {
-            bufferedImage.setRGB(pixel.x, pixel.y, pixel.color.getRGB());
+            var g = bufferedImage.getGraphics();
+            g.setColor(pixel.color);
+            g.fillRect(pixel.x, pixel.y, 1, 1);
         } catch (ArrayIndexOutOfBoundsException e) {
             //
         }

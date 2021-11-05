@@ -6,9 +6,9 @@ import java.awt.*;
 public class Pixel {
     private final static Color defaultColor = Color.BLACK;
     
-    public final int x;
-    public final int y;
-    public final Color color;
+    public int x;
+    public int y;
+    public Color color;
     
     public Pixel(int x, int y, Color color) {
         this.x = x;

@@ -12,9 +12,7 @@ public class LineDrawer
 {
     private final Line line;
     
-    public Color color = Color.BLACK;
-    
-    public LineDrawer(final Line line) {
+    public LineDrawer(Line line) {
         this.line = line;
     }
     

@@ -20,8 +20,8 @@ public class PixelPane
                MouseWheelListener,
                KeyListener
 {
-    private static final double SPEED_DRAG = 1;
-    private static final double SPEED_SCALE = 0.03;
+    public static final double SPEED_DRAG = 1;
+    public static final double SPEED_SCALE = 0.03;
     
     private final List<BaseDrawer> drawers = new ArrayList<>();
     private final DrawParams drawParams = new DrawParams();
@@ -49,10 +49,10 @@ public class PixelPane
         drawers.remove(drawer);
     }
     
-    private boolean checkEdit(InputEvent event) {
+    private boolean handle(TypeEvent typeEvent, InputEvent event) {
         var wasEdited = false;
         for (var drawer : drawers) {
-            if (drawer.edit(drawParams, event)) {
+            if (drawer.handleEvent(typeEvent, event, drawParams)) {
                 wasEdited = true;
             }
         }
@@ -71,58 +71,58 @@ public class PixelPane
     }
     
     @Override
-    public void keyTyped(final KeyEvent e) {
-        checkEdit(e);
+    public void keyTyped(KeyEvent e) {
+        handle(TypeEvent.KEY_TYPED, e);
     }
     
     @Override
-    public void keyPressed(final KeyEvent e) {
-        checkEdit(e);
+    public void keyPressed(KeyEvent e) {
+        handle(TypeEvent.KEY_PRESSED, e);
     }
     
     @Override
-    public void keyReleased(final KeyEvent e) {
-        checkEdit(e);
+    public void keyReleased(KeyEvent e) {
+        handle(TypeEvent.KEY_RELEASED, e);
     }
     
     @Override
-    public void mouseClicked(final MouseEvent e) {
-        checkEdit(e);
+    public void mouseClicked(MouseEvent e) {
+        handle(TypeEvent.MOUSE_CLICKED, e);
     }
     
     @Override
-    public void mousePressed(final MouseEvent event) {
-        if (!checkEdit(event)) {
+    public void mousePressed(MouseEvent event) {
+        if (!handle(TypeEvent.MOUSE_PRESSED, event)) {
             prevDrag = new Pixel(event.getX(), event.getY());
         }
     }
     
     @Override
-    public void mouseReleased(final MouseEvent e) {
-        if (!checkEdit(e)) {
+    public void mouseReleased(MouseEvent e) {
+        if (!handle(TypeEvent.MOUSE_RELEASED, e)) {
             prevDrag = null;
         }
     }
     
     @Override
-    public void mouseEntered(final MouseEvent e) {
-        checkEdit(e);
+    public void mouseEntered(MouseEvent e) {
+        handle(TypeEvent.MOUSE_ENTERED, e);
     }
     
     @Override
-    public void mouseExited(final MouseEvent e) {
-        checkEdit(e);
+    public void mouseExited(MouseEvent e) {
+        handle(TypeEvent.MOUSE_EXITED, e);
     }
     
     @Override
-    public void mouseDragged(final MouseEvent event) {
-        if (!checkEdit(event) && prevDrag != null) {
+    public void mouseDragged(MouseEvent event) {
+        if (!handle(TypeEvent.MOUSE_DRAGGED, event) && prevDrag != null) {
             var current = new Pixel(event.getX(), event.getY());
             var delta = new Pixel(
                 (int) ((current.x - prevDrag.x) * SPEED_DRAG),
                 (int) ((current.y - prevDrag.y) * SPEED_DRAG)
             );
-        
+            
             var deltaReal = drawParams.convert(delta);
             var zeroReal = drawParams.convert(new Pixel(0, 0));
             var vector = new Point(
@@ -139,22 +139,22 @@ public class PixelPane
     }
     
     @Override
-    public void mouseMoved(final MouseEvent e) {
-        checkEdit(e);
+    public void mouseMoved(MouseEvent e) {
+        handle(TypeEvent.MOUSE_MOVED, e);
     }
     
     @Override
-    public void mouseWheelMoved(final MouseWheelEvent event) {
-        if (!checkEdit(event)) {
+    public void mouseWheelMoved(MouseWheelEvent event) {
+        if (!handle(TypeEvent.MOUSE_WHEEL_MOVED, event)) {
             double scale = 1 + Math.signum(event.getWheelRotation()) * SPEED_SCALE;
-        
+            
             var scaleParams = new DrawParams();
             scaleParams.scaleX = scale;
             scaleParams.scaleY = scale;
             scaleParams.offsetX = (scale - 1) * drawParams.scaleX * event.getX();
             scaleParams.offsetY = (1 - scale) * drawParams.scaleY * event.getY();
             drawParams.modify(scaleParams);
-        
+            
             repaint();
         }
     }

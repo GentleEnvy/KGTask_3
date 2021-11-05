@@ -1,0 +1,16 @@
+package task_3.window;
+
+
+public enum TypeEvent {
+    KEY_TYPED,
+    KEY_PRESSED,
+    KEY_RELEASED,
+    MOUSE_CLICKED,
+    MOUSE_PRESSED,
+    MOUSE_RELEASED,
+    MOUSE_ENTERED,
+    MOUSE_EXITED,
+    MOUSE_DRAGGED,
+    MOUSE_MOVED,
+    MOUSE_WHEEL_MOVED
+}
