@@ -95,6 +95,65 @@ public class LineDrawer
         }
     }
     
+//    @Override
+//    protected void _draw(Canvas canvas) {
+//        var startPixel = canvas.convert(line.start);
+//        var endPixel = canvas.convert(line.end);
+//
+//        if (startPixel.equals(endPixel)) {
+//            canvas.setPixel(startPixel);
+//            return;
+//        }
+//
+//        int startX = startPixel.x;
+//        int startY = startPixel.y;
+//        int endX = endPixel.x;
+//        int endY = endPixel.y;
+//
+//        int dx = Math.abs(startX - endX);
+//        int dy = Math.abs(startY - endY);
+//
+//        boolean isSteep = dx < dy;
+//        if (isSteep) {
+//            final int startX_ = startX;
+//            //noinspection SuspiciousNameCombination
+//            startX = startY;
+//            //noinspection SuspiciousNameCombination
+//            startY = startX_;
+//
+//            int endX_ = endX;
+//            //noinspection SuspiciousNameCombination
+//            endX = endY;
+//            //noinspection SuspiciousNameCombination
+//            endY = endX_;
+//
+//            int dx_ = dx;
+//            dx = dy;
+//            dy = dx_;
+//        }
+//
+//        if (startX > endX) {
+//            int startX_ = startX;
+//            startX = endX;
+//            endX = startX_;
+//            int startY_ = startY;
+//            startY = endY;
+//            endY = startY_;
+//        }
+//
+//        int stepY = startY > endY ? -1 : 1;
+//        int y = startY;
+//        int d = dx / 2;
+//        for (int x = startX; x <= endX; ++x) {
+//            canvas.setPixel(new Pixel(isSteep ? y : x, isSteep ? x : y, color));
+//            d -= dy;
+//            if (d < 0) {
+//                y += stepY;
+//                d += dx;
+//            }
+//        }
+//    }
+    
     private Color createColor(double opacity) {
         return new Color(
             color.getRed(),

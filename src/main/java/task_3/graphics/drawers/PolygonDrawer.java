@@ -78,8 +78,12 @@ public class PolygonDrawer
                                 deltaReal.x - zeroReal.x,
                                 deltaReal.y - zeroReal.y
                             );
-                            this.drawParams.offsetX += vector.x;
-                            this.drawParams.offsetY += vector.y;
+//                            this.drawParams.offsetX += vector.x;
+//                            this.drawParams.offsetY += vector.y;
+                            for (Point vertex : polygon.getPoints()) {
+                                vertex.x += vector.x;
+                                vertex.y += vector.y;
+                            }
                             prevDrag = pixel;
                             return true;
                         }

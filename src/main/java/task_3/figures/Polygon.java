@@ -8,8 +8,6 @@ import java.util.List;
 
 public class Polygon {
     private final List<Point> points = new ArrayList<>();
-    public final double radius;
-    public final Point center;
     
     public Polygon(double radius, int n, double startAngle, Point center)
     throws IllegalArgumentException {
@@ -25,8 +23,6 @@ public class Polygon {
             ));
             angle += deltaAngle;
         }
-        this.radius = radius;
-        this.center = center;
     }
     
     public Polygon(int n, double side, double startAngle, Point center)
