@@ -11,6 +11,7 @@ import task_3.window.TypeEvent;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -132,6 +133,17 @@ public class PolygonDrawer
                 isSelected = true;
                 return true;
             }
+        }
+        else if (
+            isSelected && event instanceof KeyEvent && typeEvent == TypeEvent.KEY_PRESSED
+        ) {
+            var keyEvent = (KeyEvent) event;
+            if (keyEvent.getKeyChar() == '+') {
+                polygon.n++;
+            } else if (keyEvent.getKeyChar() == '-') {
+                polygon.n--;
+            }
+            return false;
         }
         return false;
     }
